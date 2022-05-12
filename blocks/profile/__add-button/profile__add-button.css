@@ -1,0 +1,19 @@
+.profile__add-button {
+  width: 150px;
+  height: 50px;
+  background-color: #000000;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  grid-column: 4/5;
+  margin-top: 35px;
+  padding: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__add-button {
+    width: 282px;
+    grid-column: 1/2;
+    grid-row: 7/8;
+    margin-top: 36px;
+  }
+}

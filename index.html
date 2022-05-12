@@ -6,7 +6,93 @@
     <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
 </head>
-<body class="page">
+
+<body class="page">  
+
+    <header class="header">
+      <a href="#" class="header__logo"></a>
+    </header>
+
+  <main class="content">
+
+<!-- Секция  Profile -->
+
+  <section class="profile">
+    <img class="profile__avatar" src="./images/Avatar.png" alt="фото пользователя">
+    <div class="profile__info">
+    <h1 class="profile__info-name">Жак-Ив Кусто</h1>
+    <p class="profile__info-occupation">Исследователь океана</p>
+    </div>
+    <button class="profile__edit-button button">
+      <img class="image" src="./images/Edit.svg" alt="кнопка редактировать">
+    </button>
+    <button class="profile__add-button button">
+      <img src="./images/Add_pic.svg" alt="кнопка добавить">
+    </button>
     
+  </section>
+
+  <!-- Секция  Elements -->
+
+  <section class="elements">
+    <ul class="elements__list">
+      <li class="elements__list-item">
+        <img src="./images/Karachaevsk.png" class="elements__pic" alt="Карачаевск">
+        <div class="elements__info">
+          <p class="elements__name">Карачаевск</p>
+          <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+        </div>
+      </li>
+      <li class="elements__list-item">
+          <img src="./images/Dombay.png" class="elements__pic" alt="Домбэй">
+          <div class="elements__info">
+            <p class="elements__name">Домбай</p>
+            <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+          </div>
+        </li>
+      <li class="elements__list-item">
+          <img src="./images/Elbrus.png" class="elements__pic" alt="Эльбрус">
+          <div class="elements__info">
+            <p class="elements__name">Гора Эльбрус</p>
+            <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+          </div>
+        </li>
+      <li class="elements__list-item">
+          <img src="./images/Kalugskaja_oblast.png" class="elements__pic" alt="Калужская область">
+          <div class="elements__info">
+            <p class="elements__name">Калужская область</p>
+            <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+          </div>
+      </li>
+      <li class="elements__list-item">
+          <img src="./images/Sochi.png" class="elements__pic" alt="Сочи">
+          <div class="elements__info">
+            <p class="elements__name">Сочи</p>
+            <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+          </div>
+      </li>
+      <li class="elements__list-item">
+          <img src="./images/Sudak.png" class="elements__pic" alt="Судак">
+          <div class="elements__info">
+            <p class="elements__name">Судак</p>
+            <img src="./images/Like.svg" class="elements__like elements__like_active" alt="нравится">
+          </div>
+      </li>
+    </ul>
+    </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">© 2020 Mesto Russia</p>
+    </footer>
+  <section class="popup">
+    <img src="./images/CloseIcon.svg" class="popup__close-icon button" alt="закрыть">
+    <form class="popup__container">
+      <h1 class="popup__title">Редактировать профиль</h1>
+      <input type="text" class="popup__name"></input>
+      <input type="text" class="popup__occupation"></input>
+      <button class="popup__button">Сохранить</button>
+    </form>
+  </section> 
+  <script type="text/javascript" src="./scripts/index.js"></script>
 </body>
 </html>
