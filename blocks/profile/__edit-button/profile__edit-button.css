@@ -6,6 +6,7 @@
   margin-right: 244px;
   grid-column: 3/4;
   margin-top: 35px;
+  padding: 0;
 }
 
 @media screen and (max-width: 767px) {
@@ -15,6 +16,5 @@
     grid-column: 1/2;
     grid-row: 3/4;
     margin: 10px auto 0 250px;
-    padding: 0;
   }
 }
