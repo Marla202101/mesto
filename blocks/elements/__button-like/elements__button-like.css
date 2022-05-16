@@ -1,4 +1,5 @@
 .elements__button-like {
     border: none;
     background-color: #FFFFFF;
+    cursor: pointer;
 }
