@@ -3,7 +3,7 @@
   height: 32px;
   position: absolute;
   top: -40px;
-  left: 438px;
+  right: -36px;
   border: none;
   background-color: rgba(0, 0, 0, 0);
   background-image: url(../../../images/CloseIcon.svg);
@@ -16,6 +16,6 @@
       width: 20px;
       height: 20px;
       top: -36px;
-      left: 262px;
+      right: 0;
     }
   }

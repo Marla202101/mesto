@@ -1,0 +1,6 @@
+.popup-photo__info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
