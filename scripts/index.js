@@ -11,10 +11,10 @@ const photoCloseButton = previewPopup.querySelector('.popup__photo-close-icon');
 
 const formEdit = document.querySelector('.popup__container-edit');
 const formAdd = document.querySelector('.popup__container-add');
-const inputNameEdit = formEdit.querySelector('.popup__input-edit_type_name');
-const inputJobEdit = formEdit.querySelector('.popup__input-edit_type_occupation');
-const inputLocationAdd = formAdd.querySelector('.popup__input-add_type_name');
-const inputLinkAdd = formAdd.querySelector('.popup__input-add_type_link');
+const inputNameEdit = formEdit.querySelector('.popup__input_edit_name');
+const inputJobEdit = formEdit.querySelector('.popup__input_edit_occupation');
+const inputLocationAdd = formAdd.querySelector('.popup__input_add_name');
+const inputLinkAdd = formAdd.querySelector('.popup__input_add_link');
 
 const nameText = document.querySelector('.profile__info-name');
 const jobText = document.querySelector('.profile__info-occupation');
