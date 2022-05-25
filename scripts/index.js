@@ -1,22 +1,29 @@
-const popup = document.querySelector('.popup');
-const openEditButton = document.querySelector('.profile__edit-button');
-const closeButton = popup.querySelector('.popup__close-icon');
+const profilePopup = document.querySelector('.popup_edit');
+const cardPopup = document.querySelector('.popup_add');
+const previewPopup = document.querySelector('.popup_preview');
 
-const formElement = document.querySelector('.popup__container');
-const inputFirst = formElement.querySelector('.popup__input_type_name');
-const inputSecond = formElement.querySelector('.popup__input_type_occupation');
+const profileEditButton = document.querySelector('.profile__edit-button');
+const cardAddButton = document.querySelector('.profile__add-button');
+
+const profileCloseButton = profilePopup.querySelector('.popup__edit-close-icon');
+const cardCloseButton = cardPopup.querySelector('.popup__add-close-icon');
+const photoCloseButton = previewPopup.querySelector('.popup__photo-close-icon');
+
+const formEdit = document.querySelector('.popup__container-edit');
+const formAdd = document.querySelector('.popup__container-add');
+const inputNameEdit = formEdit.querySelector('.popup__input-edit_type_name');
+const inputJobEdit = formEdit.querySelector('.popup__input-edit_type_occupation');
+const inputLocationAdd = formAdd.querySelector('.popup__input-add_type_name');
+const inputLinkAdd = formAdd.querySelector('.popup__input-add_type_link');
 
 const nameText = document.querySelector('.profile__info-name');
 const jobText = document.querySelector('.profile__info-occupation');
 
 const elementTemplate = document.querySelector('.li-element').content;
-const elementsList = document.querySelector('.elements__list');
+const elementsContainer = document.querySelector('.elements__list');
 
-const openAddButton = document.querySelector('.profile__add-button');
-const formAddTitle = document.querySelector('.popup__title');
-
-const popupPhoto = document.querySelector('.popup-photo');
-const closePhoto = document.querySelector('.popup-photo__close-icon');
+const previewImage = previewPopup.querySelector('.popup__image');
+const previewName = previewPopup.querySelector('.popup__name');
 
 const initialCards = [
     {
@@ -44,54 +51,45 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+  
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+};
 
-
-function openAddForm() {
-    formAddTitle.textContent = 'Новое место';
-    inputFirst.value = '';
-    inputSecond.value = '';
-    inputFirst.placeholder = 'Название';
-    inputSecond.placeholder = 'Ссылка на картинку';
-    popup.classList.toggle('popup_opened');
-    formElement.addEventListener('submit', addSubmitHandler); 
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 };
 
 function openEditForm() {
-    formAddTitle.textContent = 'Редактировать профиль';
-    inputFirst.value = nameText.textContent;
-    inputSecond.value = jobText.textContent;
-    popup.classList.toggle('popup_opened');
-    formElement.addEventListener('submit', editSubmitHandler); 
+  inputNameEdit.value = nameText.textContent;
+  inputJobEdit.value = jobText.textContent;
+  openPopup(profilePopup);
 };
 
-function closeForm() {
-    popup.classList.toggle('popup_opened');
-    formElement.removeEventListener('submit', addSubmitHandler);
-    formElement.removeEventListener('submit', editSubmitHandler);
-};
-
-function closePopupPhoto() {
-  popupPhoto.classList.toggle('popup_opened');
-};
-
-function addSubmitHandler(evt) {
-    evt.preventDefault(); 
-    const card = createCard(inputFirst.value, inputSecond.value);
-    elementsList.prepend(card); 
-    closeForm();
+function openAddForm() {
+  openPopup(cardPopup);
 };
 
 function editSubmitHandler(evt) {
     evt.preventDefault(); 
-    nameText.textContent = inputFirst.value;
-    jobText.textContent = inputSecond.value;
-    closeForm();
+    nameText.textContent = inputNameEdit.value;
+    jobText.textContent = inputJobEdit.value;
+    closePopup(profilePopup);
+};
+
+function addSubmitHandler(evt) {
+    evt.preventDefault(); 
+    const card = createCard(inputLocationAdd.value, inputLinkAdd.value);
+    elementsContainer.prepend(card); 
+    inputLocationAdd.value = '';
+    inputLinkAdd.value = '';
+    closePopup(cardPopup);
 };
 
 function loadCards () {
   initialCards.forEach(function (cardInfo) {
         const card = createCard(cardInfo.name, cardInfo.link);
-        elementsList.append(card); 
+        elementsContainer.append(card); 
     });
 };
 
@@ -99,10 +97,12 @@ function createCard (name, link) {
     const listItem = elementTemplate.querySelector('.elements__list-item').cloneNode(true);
     const photo = listItem.querySelector('.elements__pic');
     photo.src = link;
+    photo.alt = name;
     photo.addEventListener('click', function(evt){
-      popupPhoto.querySelector('.popup-photo__image').src = link;
-      popupPhoto.querySelector('.popup-photo__name').textContent = name;
-      popupPhoto.classList.toggle('popup_opened');
+      previewImage.src = link;
+      previewImage.alt = name;
+      previewName.textContent = name;
+      openPopup(previewPopup);
     });
     listItem.querySelector('.elements__name').textContent = name;
 
@@ -119,10 +119,15 @@ function createCard (name, link) {
     return listItem;
 };
 
-openAddButton.addEventListener('click', openAddForm);
-openEditButton.addEventListener('click', openEditForm);
-closeButton.addEventListener('click', closeForm);
-closePhoto.addEventListener('click', closePopupPhoto);
+formEdit.addEventListener('submit', editSubmitHandler); 
+formAdd.addEventListener('submit', addSubmitHandler); 
+
+cardAddButton.addEventListener('click', openAddForm);
+profileEditButton.addEventListener('click', openEditForm);
+profileCloseButton.addEventListener('click', function(){closePopup(profilePopup);});
+cardCloseButton.addEventListener('click', function(){closePopup(cardPopup);});
+photoCloseButton.addEventListener('click', function(){closePopup(previewPopup);});
+
 
 loadCards ();
 

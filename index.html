@@ -29,7 +29,6 @@
     <button type="button" class="profile__add-button button">
       <img src="./images/Add_pic.svg" class="profile__add-button-pic" alt="кнопка добавить">
     </button>
-    
   </section>
 
   <!-- Секция  Elements -->
@@ -37,44 +36,56 @@
   <section class="elements">
     <ul class="elements__list"></ul>
   </section>
-  <template class="li-element">
-    <li class="elements__list-item">
-      <img class="elements__pic">
-      <button type="button" class="elements__button-trash button">
-        <img src="./images/Trash.svg" class="elements__trash" alt="удалить">
-      </button>
-      <div class="elements__info">
-        <p class="elements__name"></p>
-        <button type="button" class="elements__button-like"></button>
-      </div>
-    </li>
-  </template>
     </main>
 
     <footer class="footer">
       <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
 
+    <template class="li-element">
+      <li class="elements__list-item">
+        <img class="elements__pic">
+        <button type="button" class="elements__button-trash button">
+          <img src="./images/Trash.svg" class="elements__trash" alt="удалить">
+        </button>
+        <div class="elements__info">
+          <p class="elements__name"></p>
+          <button type="button" class="elements__button-like"></button>
+        </div>
+      </li>
+    </template>
+
     <!-- Секция  Popup -->
 
-  <section class="popup">
-    <form class="popup__container" name="popup-submit">
-      <button type="button" class="popup__close-icon button"></button>
-      <h2 class="popup__title"></h2>
-      <input type="text" class="popup__input popup__input_type_name">
-      <input type="text" class="popup__input popup__input_type_occupation">
+  <section class="popup popup_edit">
+    <form class="popup__container popup__container-edit" name="popup-submit">
+      <button type="button" class="popup__close-icon popup__edit-close-icon button"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <input type="text" class="popup__input popup__input-edit_type_name">
+      <input type="text" class="popup__input popup__input-edit_type_occupation">
       <button type="submit" class="popup__button">Сохранить</button>
     </form>
   </section> 
 
-  <section class="popup-photo popup">
-      <div class="popup-photo__info">
-        <button type="button" class="popup-photo__close-icon popup__close-icon button"></button>
-        <img src="./images/Sochi.png" class="popup-photo__image" alt="фото">
-        <p class="popup-photo__name"></p>
+  <section class="popup popup_add">
+    <form class="popup__container popup__container-add" name="popup-submit">
+      <button type="button" class="popup__close-icon popup__add-close-icon button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <input type="text" class="popup__input popup__input-add_type_name" placeholder="Название">
+      <input type="text" class="popup__input popup__input-add_type_link" placeholder="Ссылка на картинку">
+      <button type="submit" class="popup__button">Сохранить</button>
+    </form>
+  </section> 
+
+  <section class="popup popup_preview">
+      <div class="popup__info">
+        <button type="button" class="popup__close-icon popup__photo-close-icon button"></button>
+        <img class="popup__image">
+        <p class="popup__name"></p>
       </div>
   </section>
 
   <script type="text/javascript" src="./scripts/index.js"></script>
+
 </body>
 </html>
