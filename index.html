@@ -58,12 +58,18 @@
     <!-- Секция  Popup -->
 
   <section class="popup popup_edit">
-    <form class="popup__container popup__container-edit" name="popup-submit">
+    <form class="popup__container popup__container-edit" name="popup-submit" novalidate>
       <button type="button" class="popup__close-icon popup__edit-close-icon button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input popup__input_edit_name">
-      <input type="text" class="popup__input popup__input_edit_occupation">
-      <button type="submit" class="popup__button">Сохранить</button>
+      <label class="popup__field">
+        <input id="edit-name" required minlength="2" maxlength="40" type="text" name="name" class="popup__input popup__input_edit_name" placeholder="Имя">
+        <span class="edit-name-error"></span>
+      </label>
+      <label class="popup__field">
+        <input id="edit-job" required minlength="2" maxlength="200" type="text" name="job" class="popup__input popup__input_edit_occupation" placeholder="О себе">
+        <span class="edit-job-error"></span>
+      </label>
+      <button disabled type="submit" class="popup__button">Сохранить</button>
     </form>
   </section> 
 
@@ -71,9 +77,15 @@
     <form class="popup__container popup__container-add" name="popup-submit">
       <button type="button" class="popup__close-icon popup__add-close-icon button"></button>
       <h2 class="popup__title">Новое место</h2>
-      <input type="text" class="popup__input popup__input_add_name" placeholder="Название">
-      <input type="text" class="popup__input popup__input_add_link" placeholder="Ссылка на картинку">
-      <button type="submit" class="popup__button">Сохранить</button>
+      <label class="popup__field">
+        <input id="add-name" required  minlength="2" maxlength="30" type="text" name="place-name" class="popup__input popup__input_add_name" placeholder="Название">
+        <span class="add-name-error"></span>
+      </label>
+      <label class="popup__field">
+        <input id="add-link" required type="url" name="link" class="popup__input popup__input_add_link" placeholder="Ссылка на картинку">
+        <span class="add-link-error"></span>
+      </label>
+      <button  disabled type="submit" class="popup__button">Создать</button>
     </form>
   </section> 
 
@@ -84,8 +96,9 @@
         <p class="popup__name"></p>
       </div>
   </section>
-
+ 
+  <script type="text/javascript" src="./scripts/validate.js"></script>
   <script type="text/javascript" src="./scripts/index.js"></script>
-
+ 
 </body>
 </html>

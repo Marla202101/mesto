@@ -1,0 +1,10 @@
+.popup__field {
+    box-sizing: border-box;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 13px auto;
+}
+
+
+

@@ -51,18 +51,34 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+
+  const initialConfig = {
+    formSelector: '.popup__container',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_invalid',
+    inputErrorClass: 'popup__input_invalid',
+    errorClass: 'popup__input-error_active'
+  };
   
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', (evt) => {
+    closePopupEscPress(evt, popup);
+  })
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscPress);
 };
 
 function openEditForm() {
   inputNameEdit.value = nameText.textContent;
   inputJobEdit.value = jobText.textContent;
+  const inputList = Array.from(profilePopup.querySelectorAll(initialConfig.inputSelector));
+  const buttonInForm = profilePopup.querySelector(initialConfig.submitButtonSelector);
+  toggleButtonState(inputList, buttonInForm, initialConfig);
   openPopup(profilePopup);
 };
 
@@ -119,6 +135,18 @@ function createCard (name, link) {
     return listItem;
 };
 
+function closePopupOverlayClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.currentTarget);
+  }
+};
+
+function closePopupEscPress(evt, popup) {
+  if (evt.keyCode === 27) {
+    closePopup(popup);
+  }
+};
+
 formEdit.addEventListener('submit', editSubmitHandler); 
 formAdd.addEventListener('submit', addSubmitHandler); 
 
@@ -127,7 +155,9 @@ profileEditButton.addEventListener('click', openEditForm);
 profileCloseButton.addEventListener('click', function(){closePopup(profilePopup);});
 cardCloseButton.addEventListener('click', function(){closePopup(cardPopup);});
 photoCloseButton.addEventListener('click', function(){closePopup(previewPopup);});
-
+cardPopup.addEventListener('click', closePopupOverlayClick);
+profilePopup.addEventListener('click', closePopupOverlayClick);
 
 loadCards ();
 
+enableValidation(initialConfig);

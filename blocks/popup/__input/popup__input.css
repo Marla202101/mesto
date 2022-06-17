@@ -1,11 +1,23 @@
 .popup__input {
     width: 358px;
+    height: 27px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    margin: 0 auto 30px auto;
+    margin: 0 auto;
     color: #000000;
     font-size: 14px;
     line-height: 17px;
+}
+.popup__input::-webkit-input-placeholder {
+	color:  rgba(0, 0, 0, 0.2);
+}
+
+.popup__input::-moz-placeholder {
+	color:  rgba(0, 0, 0, 0.2);
+}
+
+.popup__input:focus {
+  outline: none;
 }
 
 @media screen and (max-width: 767px) {
