@@ -6,6 +6,8 @@ export class Card {
       this._previewPopup = document.querySelector('.popup_preview');
       this._previewImage = this._previewPopup.querySelector('.popup__image');
       this._previewName = this._previewPopup.querySelector('.popup__name');
+      this._likeButton = this._element.querySelector('.elements__button-like');
+      this._trashButton = this._element.querySelector('.elements__button-trash');
     }
      
     _getTemplate() {
@@ -27,7 +29,7 @@ export class Card {
         return this._element;
       } 
 
-      _handleOpenPopup() { 
+    _handleOpenPopup() { 
         this._previewImage.src = this._link;
         this._previewImage.alt = this._name;
         this._previewName.textContent = this._name;
@@ -37,14 +39,14 @@ export class Card {
         });
       }
       
-      _handleClosePopup(popup) {
+    _handleClosePopup(popup) {
         popup.classList.remove('popup_opened');
         document.removeEventListener('keydown', (evt) => {
             this._closePopupEscPress(evt);
         }); 
       }
 
-      _closePopupClick(evt) {
+    _closePopupClick(evt) {
             if (evt.target.classList.contains('popup_opened')) {
                 this._handleClosePopup(this._previewPopup)
             }
@@ -53,28 +55,33 @@ export class Card {
             }
         }
 
-      _closePopupEscPress(evt){
+    _closePopupEscPress(evt){
         if (evt.key === 'Escape') {
           this._handleClosePopup(this._previewPopup);
         };
       }
 
-      _setEventListeners(photo) {
+    _handleClickLike(evt){
+            evt.target.classList.toggle('elements__button-like_active');
+      }
+
+    _handleClickTrash(evt){
+        evt.target.closest('.elements__list-item').remove();
+      }
+
+
+    _setEventListeners(photo) {
         photo.addEventListener('click', () => {
             this._handleOpenPopup();
         });
-
         this._previewPopup.addEventListener('mousedown', (evt) => {
             this._closePopupClick(evt);
         });
-
-        const likeButton = this._element.querySelector('.elements__button-like');
-        likeButton.addEventListener('click', (evt) => {
-            evt.target.classList.toggle('elements__button-like_active');
+         this._likeButton.addEventListener('click', (evt) => {
+            this._handleClickLike(evt);
         });
-        const trashButton = this._element.querySelector('.elements__button-trash');
-        trashButton.addEventListener('click', (evt) => {
-            evt.target.closest('.elements__list-item').remove();
+                this._trashButton.addEventListener('click', (evt) => {
+            this._handleClickTrash(evt);
         });
     }
 };
