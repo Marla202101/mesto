@@ -1,31 +1,25 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 const popups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector('.popup_edit');
 const cardPopup = document.querySelector('.popup_add');
-const previewPopup = document.querySelector('.popup_preview');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const cardAddButton = document.querySelector('.profile__add-button');
-
-const profileCloseButton = profilePopup.querySelector('.popup__edit-close-icon');
-const cardCloseButton = cardPopup.querySelector('.popup__add-close-icon');
-const photoCloseButton = previewPopup.querySelector('.popup__photo-close-icon');
 
 const formEdit = document.querySelector('.popup__container-edit');
 const formAdd = document.querySelector('.popup__container-add');
 const inputNameEdit = formEdit.querySelector('.popup__input_edit_name');
 const inputJobEdit = formEdit.querySelector('.popup__input_edit_occupation');
+
 const inputLocationAdd = formAdd.querySelector('.popup__input_add_name');
 const inputLinkAdd = formAdd.querySelector('.popup__input_add_link');
 
 const nameText = document.querySelector('.profile__info-name');
 const jobText = document.querySelector('.profile__info-occupation');
 
-const elementTemplate = document.querySelector('.li-element').content;
 const elementsContainer = document.querySelector('.elements__list');
-
-const previewImage = previewPopup.querySelector('.popup__image');
-const previewName = previewPopup.querySelector('.popup__name');
-
 
 const initialCards = [
     {
@@ -62,13 +56,6 @@ const initialCards = [
     inputErrorClass: 'popup__input_invalid',
     errorClass: 'popup__input-error_active'
   }; 
-  
-  const inputListProfilePopup = Array.from(profilePopup.querySelectorAll(initialConfig.inputSelector));
-  const buttonInFormProfilePopup = profilePopup.querySelector(initialConfig.submitButtonSelector);
-  
-  const inputListCardPopup = Array.from(cardPopup.querySelectorAll(initialConfig.inputSelector));
-  const buttonInFormCardPopup = cardPopup.querySelector(initialConfig.submitButtonSelector);
-
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -83,12 +70,12 @@ function closePopup(popup) {
 function openEditForm() {
   inputNameEdit.value = nameText.textContent;
   inputJobEdit.value = jobText.textContent;
-  toggleButtonState(inputListProfilePopup, buttonInFormProfilePopup, initialConfig);
+  profileEditValidator.resetValidation();
   openPopup(profilePopup);
 };
 
 function openAddForm() {
-  toggleButtonState(inputListCardPopup, buttonInFormCardPopup, initialConfig);
+  cardAddValidator.resetValidation();
   openPopup(cardPopup);
 };
 
@@ -101,49 +88,17 @@ function editSubmitHandler(evt) {
 
 function addSubmitHandler(evt) {
     evt.preventDefault(); 
-    const card = createCard(inputLocationAdd.value, inputLinkAdd.value);
-    elementsContainer.prepend(card); 
+    const card = new Card(inputLocationAdd.value, inputLinkAdd.value, '.li-element');
+    elementsContainer.prepend(card.generateCard()); 
     evt.currentTarget.reset();
     closePopup(cardPopup);
 };
 
 function loadCards () {
   initialCards.forEach(function (cardInfo) {
-        const card = createCard(cardInfo.name, cardInfo.link);
-        elementsContainer.append(card); 
+        const card = new Card(cardInfo.name, cardInfo.link, '.li-element');
+        elementsContainer.append(card.generateCard()); 
     });
-};
-
-function createCard (name, link) {
-    const listItem = elementTemplate.querySelector('.elements__list-item').cloneNode(true);
-    const photo = listItem.querySelector('.elements__pic');
-    photo.src = link;
-    photo.alt = name;
-    photo.addEventListener('click', function(evt){
-      previewImage.src = link;
-      previewImage.alt = name;
-      previewName.textContent = name;
-      openPopup(previewPopup);
-    });
-    listItem.querySelector('.elements__name').textContent = name;
-
-    const likeButton = listItem.querySelector('.elements__button-like');
-    likeButton.addEventListener('click', function(evt){
-      evt.target.classList.toggle('elements__button-like_active');
-    });
-
-    const trashButton = listItem.querySelector('.elements__button-trash');
-    trashButton.addEventListener('click', function(evt){
-      evt.target.closest('.elements__list-item').remove();
-    });
-
-    return listItem;
-};
-
-function closePopupOverlayClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup(evt.currentTarget);
-  }
 };
 
 function closePopupEscPress(evt){
@@ -171,4 +126,9 @@ profileEditButton.addEventListener('click', openEditForm);
 
 loadCards ();
 
-enableValidation(initialConfig);
+const profileEditValidator = new FormValidator(initialConfig, formEdit);
+const cardAddValidator = new FormValidator(initialConfig, formAdd);
+
+profileEditValidator.enableValidation();
+cardAddValidator.enableValidation();
+
