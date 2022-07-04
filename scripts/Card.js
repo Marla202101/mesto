@@ -1,13 +1,12 @@
 export class Card {
-    constructor(name, link, cardSelector) {
+    constructor(name, link, cardSelector, openPopup ) {
       this._name = name;
       this._link = link;
       this._cardSelector = cardSelector;
+      this._openPopup = openPopup;
       this._previewPopup = document.querySelector('.popup_preview');
       this._previewImage = this._previewPopup.querySelector('.popup__image');
       this._previewName = this._previewPopup.querySelector('.popup__name');
-      this._likeButton = this._element.querySelector('.elements__button-like');
-      this._trashButton = this._element.querySelector('.elements__button-trash');
     }
      
     _getTemplate() {
@@ -21,10 +20,12 @@ export class Card {
   
     generateCard() {
         this._element = this._getTemplate();
-        const photo = this._element.querySelector('.elements__pic');
-        photo.src = this._link;
-        photo.alt = this._name;
-        this._setEventListeners(photo);
+        this._photo = this._element.querySelector('.elements__pic');
+        this._likeButton = this._element.querySelector('.elements__button-like');
+        this._trashButton = this._element.querySelector('.elements__button-trash');
+        this._photo.src = this._link;
+        this._photo.alt = this._name;
+        this._setEventListeners();
         this._element.querySelector('.elements__name').textContent = this._name;
         return this._element;
       } 
@@ -33,33 +34,8 @@ export class Card {
         this._previewImage.src = this._link;
         this._previewImage.alt = this._name;
         this._previewName.textContent = this._name;
-        this._previewPopup.classList.add('popup_opened');
-        document.addEventListener('keydown', (evt) => {
-            this._closePopupEscPress(evt);
-        });
-      }
-      
-    _handleClosePopup(popup) {
-        popup.classList.remove('popup_opened');
-        document.removeEventListener('keydown', (evt) => {
-            this._closePopupEscPress(evt);
-        }); 
-      }
-
-    _closePopupClick(evt) {
-            if (evt.target.classList.contains('popup_opened')) {
-                this._handleClosePopup(this._previewPopup)
-            }
-            if (evt.target.classList.contains('popup__close-icon')) {
-                this._handleClosePopup(this._previewPopup)
-            }
-        }
-
-    _closePopupEscPress(evt){
-        if (evt.key === 'Escape') {
-          this._handleClosePopup(this._previewPopup);
-        };
-      }
+        this._openPopup(this._previewPopup);
+      }  
 
     _handleClickLike(evt){
             evt.target.classList.toggle('elements__button-like_active');
@@ -70,17 +46,14 @@ export class Card {
       }
 
 
-    _setEventListeners(photo) {
-        photo.addEventListener('click', () => {
+    _setEventListeners() {
+        this._photo.addEventListener('click', () => {
             this._handleOpenPopup();
         });
-        this._previewPopup.addEventListener('mousedown', (evt) => {
-            this._closePopupClick(evt);
-        });
-         this._likeButton.addEventListener('click', (evt) => {
+        this._likeButton.addEventListener('click', (evt) => {
             this._handleClickLike(evt);
         });
-                this._trashButton.addEventListener('click', (evt) => {
+        this._trashButton.addEventListener('click', (evt) => {
             this._handleClickTrash(evt);
         });
     }

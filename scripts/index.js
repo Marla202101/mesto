@@ -75,6 +75,7 @@ function openEditForm() {
 };
 
 function openAddForm() {
+  formAdd.reset();
   cardAddValidator.resetValidation();
   openPopup(cardPopup);
 };
@@ -86,18 +87,22 @@ function editSubmitHandler(evt) {
     closePopup(profilePopup);
 };
 
+function createCard(name, link) {
+  const card = new Card(name, link, '.li-element', openPopup);
+  return card.generateCard();
+}
+
 function addSubmitHandler(evt) {
     evt.preventDefault(); 
-    const card = new Card(inputLocationAdd.value, inputLinkAdd.value, '.li-element');
-    elementsContainer.prepend(card.generateCard()); 
-    evt.currentTarget.reset();
+    const card = createCard(inputLocationAdd.value, inputLinkAdd.value);
+    elementsContainer.prepend(card); 
     closePopup(cardPopup);
 };
 
 function loadCards () {
   initialCards.forEach(function (cardInfo) {
-        const card = new Card(cardInfo.name, cardInfo.link, '.li-element');
-        elementsContainer.append(card.generateCard()); 
+        const card = createCard(cardInfo.name, cardInfo.link);
+        elementsContainer.append(card); 
     });
 };
 

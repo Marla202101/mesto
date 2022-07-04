@@ -2,6 +2,8 @@ export class FormValidator {
   constructor (initialConfig, formElement) {
     this._initialConfig = initialConfig;
     this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._initialConfig.inputSelector));
+    this._buttonInForm = this._formElement.querySelector(this._initialConfig.submitButtonSelector);
   }
 
 _showInputError (inputElement, errorMessage) {
@@ -37,26 +39,22 @@ _isValid (inputElement) {
 
 // Вызовем функцию isValid на каждый ввод символа
 _setEventListeners () {
-    // Находим все поля внутри формы,
-    // сделаем из них массив методом Array.from
-    const inputList = Array.from(this._formElement.querySelectorAll(this._initialConfig.inputSelector));
-    const buttonInForm = this._formElement.querySelector(this._initialConfig.submitButtonSelector);
     // Обойдём все элементы полученной коллекции
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       // каждому полю добавим обработчик события input
       inputElement.addEventListener('input', () => {
         // Внутри колбэка вызовем isValid,
         // передав ей форму и проверяемый элемент
         this._isValid(inputElement);
-        this._toggleButtonState(inputList, buttonInForm);
+        this._toggleButtonState();
       });
     });
-    this._toggleButtonState(inputList, buttonInForm);
+    this._toggleButtonState();
   }
 
-_hasInvalidInput (inputList) {
+_hasInvalidInput () {
     // проходим по этому массиву методом some
-    return inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       // Если поле не валидно, колбэк вернёт true
       // Обход массива прекратится и вся функция
       // hasInvalidInput вернёт true
@@ -68,25 +66,24 @@ _hasInvalidInput (inputList) {
   // Функция принимает массив полей ввода
 // и элемент кнопки, состояние которой нужно менять
 
-_toggleButtonState (inputList, buttonInForm) {
+_toggleButtonState () {
     // Если есть хотя бы один невалидный инпут
-    if (this._hasInvalidInput(inputList)) {
+    if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
-      buttonInForm.classList.add(this._initialConfig.inactiveButtonClass);
-      buttonInForm.disabled = true;
+      this._buttonInForm.classList.add(this._initialConfig.inactiveButtonClass);
+      this._buttonInForm.disabled = true;
     } else {
       // иначе сделай кнопку активной
-      buttonInForm.classList.remove(this._initialConfig.inactiveButtonClass);
-      buttonInForm.disabled = false;
+      this._buttonInForm.classList.remove(this._initialConfig.inactiveButtonClass);
+      this._buttonInForm.disabled = false;
     }
 }; 
 
 resetValidation () {
-  // Находим все поля внутри формы,
-    // сделаем из них массив методом Array.from
-    const inputList = Array.from(this._formElement.querySelectorAll(this._initialConfig.inputSelector));
-    const buttonInForm = this._formElement.querySelector(this._initialConfig.submitButtonSelector);
-    this._toggleButtonState(inputList, buttonInForm);
+    this._toggleButtonState();
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
 }
 
 enableValidation () {
