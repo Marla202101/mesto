@@ -1,12 +1,9 @@
-export class Card {
-    constructor(name, link, cardSelector, openPopup ) {
+export default class Card {
+    constructor(name, link, cardSelector, handleCardClick ) {
       this._name = name;
       this._link = link;
       this._cardSelector = cardSelector;
-      this._openPopup = openPopup;
-      this._previewPopup = document.querySelector('.popup_preview');
-      this._previewImage = this._previewPopup.querySelector('.popup__image');
-      this._previewName = this._previewPopup.querySelector('.popup__name');
+      this._handleCardClick = handleCardClick;
     }
      
     _getTemplate() {
@@ -30,13 +27,6 @@ export class Card {
         return this._element;
       } 
 
-    _handleOpenPopup() { 
-        this._previewImage.src = this._link;
-        this._previewImage.alt = this._name;
-        this._previewName.textContent = this._name;
-        this._openPopup(this._previewPopup);
-      }  
-
     _handleClickLike(evt){
             evt.target.classList.toggle('elements__button-like_active');
       }
@@ -48,7 +38,7 @@ export class Card {
 
     _setEventListeners() {
         this._photo.addEventListener('click', () => {
-            this._handleOpenPopup();
+            this._handleCardClick(this._name, this._link);
         });
         this._likeButton.addEventListener('click', (evt) => {
             this._handleClickLike(evt);
