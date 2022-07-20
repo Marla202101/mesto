@@ -11,6 +11,10 @@ export const formAdd = document.querySelector('.popup__container-add');
 export const nameSelector = '.profile__info-name';
 export const jobSelector = '.profile__info-occupation';
 
+export const inputNameEdit = formEdit.querySelector('.popup__input_edit_name');
+export const inputJobEdit = formEdit.querySelector('.popup__input_edit_occupation');
+
+
 export const elementsContainerSelector = '.elements__list';
 
 export const initialCards = [

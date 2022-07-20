@@ -9,7 +9,9 @@ import { initialConfig,
   elementsContainerSelector,
   initialCards,
   nameSelector,
-  jobSelector
+  jobSelector,
+  inputNameEdit,
+  inputJobEdit
  } from '../utils/constants.js';
 import './index.css';
 import Card from '../components/Card.js';
@@ -39,14 +41,14 @@ const cardsSection = new Section(
 cardsSection.render(); 
 
 const popupWithImage = new PopupWithImage(previewPopupSelector);
-const popupEditForm = new PopupWithForm(profilePopupSelector, (evt, values) => {
+const popupEditForm = new PopupWithForm(profilePopupSelector, (evt, data) => {
   evt.preventDefault(); 
-  userInfo.setUserInfo(values[0], values[1]);
+  userInfo.setUserInfo(data);
   popupEditForm.close();
 });
-const popupAddForm = new PopupWithForm(cardPopupSelector, (evt, values) => {
+const popupAddForm = new PopupWithForm(cardPopupSelector, (evt, data) => {
   evt.preventDefault(); 
-  const card = createCard(values[0], values[1]);
+  const card = createCard(data.placename, data.link);
   cardsSection.addItem(card);
   popupAddForm.close();
 });
@@ -63,7 +65,9 @@ cardAddButton.addEventListener('click', () => {
 profileEditButton.addEventListener('click', () => {
   profileEditValidator.resetValidation();
   const userInfoValues = userInfo.getUserInfo();
-  popupEditForm.openWithValues(userInfoValues.name, userInfoValues.job);
+  inputNameEdit.value = userInfoValues.name
+  inputJobEdit.value = userInfoValues.job
+  popupEditForm.open();
 });
 
 const profileEditValidator = new FormValidator(initialConfig, formEdit);
