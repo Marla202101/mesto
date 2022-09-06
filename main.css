@@ -42,3 +42,7 @@
 .popup__name{color:#fff;font-size:12px;font-style:normal;font-weight:400;line-height:15px}
 .popup__image{max-height:75vh;max-width:75vw}
 
+.popup__inside{background:#fff;border-radius:10px;display:flex;flex-direction:column;height:181px;margin:0 auto;padding:0;position:relative;width:430px}
+
+
+
