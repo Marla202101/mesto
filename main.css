@@ -43,6 +43,6 @@
 .popup__image{max-height:75vh;max-width:75vw}
 
 .popup__inside{background:#fff;border-radius:10px;display:flex;flex-direction:column;height:181px;margin:0 auto;padding:0;position:relative;width:430px}
-
+.popup__question{color:#000;font-size:24px;font-weight:900;line-height:29px}
 
 
