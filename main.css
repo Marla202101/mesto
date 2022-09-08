@@ -23,7 +23,7 @@
 .elements__name{color:#000;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .elements__button-like{background:url(0e390048c288271ab07f.svg),#fff;background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:19px;width:22px}.elements__button-like:hover{opacity:.5}
 .elements__button-like_active{background-image:url(35948469632d0421d697.svg);background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:19px;width:22px}
-.elements__like-counter{color:#000;font-size:13px;font-weight:400;line-height:16px}
+.elements__like-counter{color:#000;font-size:13px;font-weight:400;line-height:16px;margin:0 auto}
 .footer{margin-bottom:60px;margin-left:15.63%;margin-top:66px;max-width:318px}@media screen and (max-width:767px){.footer{margin:48px auto 36px;max-width:282px}}
 .footer__text{color:#545454;font-size:18px;font-style:normal;font-weight:400;line-height:22px}@media screen and (max-width:767px){.footer__text{font-size:14px;line-height:17px}}
 .popup{align-items:center;background-color:rgba(0,0,0,.5);display:flex;height:100%;justify-content:center;left:0;opacity:0;position:fixed;top:0;transition:visibility .3s,opacity .3s linear;visibility:hidden;width:100%}
