@@ -19,7 +19,7 @@
 .elements__button-trash{background-color:hsla(0,0%,100%,0);border:none;position:absolute;right:20px;top:20px}
 .elements__trash{height:19px;width:18px}
 .elements__pic{border-top-left-radius:10px;border-top-right-radius:10px;cursor:pointer;height:282px;width:282px}
-.elements__info{align-items:center;display:flex;justify-content:space-between;margin-left:20px;margin-top:25px;max-width:246px}
+.elements__info{align-items:center;display:flex;justify-content:space-between;margin-left:20px;max-width:246px}
 .elements__name{border:1px solid #000;color:#000;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .elements__button-like{background:url(0e390048c288271ab07f.svg),#fff;background-repeat:no-repeat;background-size:contain;border:1px solid #000;cursor:pointer;height:19px;width:22px}.elements__button-like:hover{opacity:.5}
 .elements__button-like_active{background-image:url(35948469632d0421d697.svg);background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:19px;width:22px}
