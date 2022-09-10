@@ -2,11 +2,13 @@
     width: 358px;
     height: 27px;
     box-sizing: border-box;
-    height: 44px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
 }
 
+.popup__field :last-child {
+    margin-bottom: 0;
+}
 
 
