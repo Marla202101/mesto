@@ -29,7 +29,6 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
 let userId;
-let initialCards;
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-49',
@@ -42,9 +41,8 @@ const api = new Api({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([user, cards]) => {
     userId = user._id;
-    initialCards = cards;
     userInfo.setUserInfo(user);
-    cardsSection.render(initialCards); 
+    cardsSection.render(cards); 
   })
   .catch(handleError);
 
@@ -64,8 +62,8 @@ function createCard(data) {
       .then(() => {
           questionPopup.close();
           card.delete();})
-    })
-    .catch(handleError);
+      .catch(handleError);
+    }) 
   },
   (card) => {
     api.addLike(card._cardId)

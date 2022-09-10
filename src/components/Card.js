@@ -1,5 +1,3 @@
-import PopupWithQuestion from "./PopupWithQuestion";
-
 export default class Card {
   constructor(
     data,
@@ -54,7 +52,7 @@ export default class Card {
   updateLikes(likes) {
     this._likes = likes;
     this._likeCounter.textContent = this._likes.length;
-    if (this._likes.length > 0)
+    if (this._isLiked())
       this._likeButton.classList.add("elements__button-like_active");
     else this._likeButton.classList.remove("elements__button-like_active");
   }
