@@ -1,0 +1,14 @@
+.profile__edit-icon {
+  width: 26px;
+  height: 26px;
+  background: url(../../../images/EditPen.svg);
+  background-repeat: no-repeat;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  align-self: center;
+  margin-left: 34px;
+  visibility: hidden;
+}
+

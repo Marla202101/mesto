@@ -1,0 +1,11 @@
+.popup__inside {
+    width: 430px;
+    height: 181px;
+    margin: 0 auto;
+    padding: 0;
+    background: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}

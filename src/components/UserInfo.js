@@ -1,7 +1,15 @@
 export default class UserInfo {
-    constructor({ nameSelector, jobSelector}) {
+    constructor(nameSelector, jobSelector, imageSelector, imageChangerSelector) {
        this._name = document.querySelector(nameSelector);
        this._job = document.querySelector(jobSelector);
+       this._image = document.querySelector(imageSelector);
+       this._imageChanger = document.querySelector(imageChangerSelector);
+       this._image.addEventListener('mouseenter', () => {
+        this._imageChanger.classList.toggle('profile__edit-icon_active');
+       });
+       this._image.addEventListener('mouseleave', () => {
+        this._imageChanger.classList.toggle('profile__edit-icon_active');
+       });
     }
 
     getUserInfo() {
@@ -10,6 +18,9 @@ export default class UserInfo {
 
     setUserInfo(data) {
         this._name.textContent = data.name;
-        this._job.textContent = data.job;
+        this._job.textContent = data.about;
+    }
+    setAvatar(link) {
+        this._image.src = link;
     }
 }

@@ -1,0 +1,6 @@
+.profile__pictures {
+    width: 120px;
+    height: 120px;
+    display: grid;
+    margin-right: 17px;
+}

@@ -2,14 +2,19 @@ import { initialConfig,
   previewPopupSelector,
   profilePopupSelector,
   cardPopupSelector,
+  questionPopupSelector,
+  avatarPopupSelector,
   profileEditButton,
   cardAddButton,
+  avatarEditButton,
   formEdit,
   formAdd,
+  formAvatarEdit,
   elementsContainerSelector,
-  initialCards,
-  nameSelector,
-  jobSelector,
+  userImageSelector,
+  userImageChangerSelector,
+  userNameSelector,
+  userJobSelector,
   inputNameEdit,
   inputJobEdit
  } from '../utils/constants.js';
@@ -19,43 +24,130 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithQuestion from '../components/PopupWithQuestion.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
-function createCard(name, link) {
-  const card = new Card(name, link, '.li-element', (name, link) => {
+let userId;
+let initialCards;
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-49',
+  headers: {
+	authorization: '2c6f5583-0cd8-46f5-acd2-5e39324f0044',
+	'Content-Type': 'application/json',
+  },
+});
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cards]) => {
+    userId = user._id;
+    initialCards = cards;
+    userInfo.setUserInfo(user);
+    cardsSection.render(initialCards); 
+  })
+  .catch(handleError);
+
+function handleError(err) {
+  console.log(err);
+}
+
+function createCard(data) {
+  const card = new Card(data, userId, '.li-element', 
+  (name, link) => {
     popupWithImage.open(name, link);
+  }, 
+  (card) => {
+    questionPopup.open();
+    questionPopup.setActionCallBack(() => {
+      api.deleteCard(card._cardId)
+      .then(() => {
+          questionPopup.close();
+          card.delete();})
+    })
+    .catch(handleError);
+  },
+  (card) => {
+    api.addLike(card._cardId)
+    .then((data) => {
+      card.updateLikes(data.likes);
+    })
+    .catch(handleError);
+    
+  },
+  (card) => {
+    api.deleteLike(card._cardId)
+    .then((data) => {
+      card.updateLikes(data.likes);
+    })
+    .catch(handleError);
   });
   return card.generateCard();
 };
 
-const userInfo = new UserInfo({nameSelector, jobSelector}); 
+const userInfo = new UserInfo(userNameSelector, userJobSelector, userImageSelector, userImageChangerSelector); 
 
 const cardsSection = new Section(
-  { items: initialCards, 
-    renderer: (item) => {
-      const card = createCard(item.name, item.link);
+  (item) => {
+      const card = createCard(item);
       cardsSection.addItem(card);
     }
-  }, elementsContainerSelector);
+    , elementsContainerSelector);
 
-cardsSection.render(); 
-
+const questionPopup = new PopupWithQuestion(questionPopupSelector);
 const popupWithImage = new PopupWithImage(previewPopupSelector);
-const popupEditForm = new PopupWithForm(profilePopupSelector, (evt, data) => {
+const popupEditForm = new PopupWithForm(profilePopupSelector, (evt, formData) => {
   evt.preventDefault(); 
-  userInfo.setUserInfo(data);
-  popupEditForm.close();
+  popupEditForm.setLoading(true, true);
+  api.setUserInfo(formData)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      popupEditForm.close();
+  })
+  .catch(handleError).finally(() => {
+    popupEditForm.setLoading(false, true);
+ });
 });
-const popupAddForm = new PopupWithForm(cardPopupSelector, (evt, data) => {
+const popupAddForm = new PopupWithForm(cardPopupSelector, (evt, formData) => {
   evt.preventDefault(); 
-  const card = createCard(data.placename, data.link);
-  cardsSection.addItem(card);
-  popupAddForm.close();
+  popupAddForm.setLoading(true, false);
+  api.createCard(formData)
+    .then((data) => {
+      const card = createCard(data);
+      cardsSection.addItem(card);
+      popupAddForm.close();
+    })
+    .catch(handleError)
+    .finally(() => {
+      popupAddForm.setLoading(false, false);
+   });
+   
+});
+
+const popupWithAvatar = new PopupWithForm(avatarPopupSelector, (evt, formData) => {
+  evt.preventDefault(); 
+  popupWithAvatar.setLoading(true, true);
+  api.setUserAvatar(formData)
+  .then((data) => {
+    userInfo.setAvatar(data.avatar);
+    popupWithAvatar.close()
+  })
+  .catch(handleError)
+  .finally(() => {
+    popupWithAvatar.setLoading(false, true);
+ }); 
 });
 
 popupWithImage.setEventListeners();
 popupEditForm.setEventListeners();
 popupAddForm.setEventListeners();
+questionPopup.setEventListeners();
+popupWithAvatar.setEventListeners();
+
+avatarEditButton.addEventListener('click', () => {
+  avatarEditValidator.resetValidation();
+  popupWithAvatar.open();
+});
 
 cardAddButton.addEventListener('click', () => {
   cardAddValidator.resetValidation();
@@ -70,8 +162,9 @@ profileEditButton.addEventListener('click', () => {
   popupEditForm.open();
 });
 
-const profileEditValidator = new FormValidator(initialConfig, formEdit);
 const cardAddValidator = new FormValidator(initialConfig, formAdd);
+const profileEditValidator = new FormValidator(initialConfig, formEdit);
+const avatarEditValidator = new FormValidator(initialConfig, formAvatarEdit);
 profileEditValidator.enableValidation();
 cardAddValidator.enableValidation();
-
+avatarEditValidator.enableValidation();
